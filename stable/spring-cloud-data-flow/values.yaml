@@ -23,11 +23,11 @@ server:
   platformName: default
   ssl:
     enable: true
-    key-alias: dataflow
-    key-store: "scdfdataflow.keystore"
-    key-store-type: jks
-    key-store-password: dataflow
-    key-password: dataflow
+    keyalias: dataflow
+    keystore: "scdfdataflow.keystore"
+    keystoretype: jks
+    keystorepassword: dataflow
+    keypassword: dataflow
   service:
     type: LoadBalancer
     externalPort: 80

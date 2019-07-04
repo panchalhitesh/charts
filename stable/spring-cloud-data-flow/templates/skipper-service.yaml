@@ -4,6 +4,7 @@ metadata:
   name: {{ template "scdf.fullname" . }}-skipper
   labels:
     app: {{ template "scdf.name" . }}
+    k8s-app: {{ template "scdf.name" . }}
     component: skipper
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: "{{ .Release.Name }}"

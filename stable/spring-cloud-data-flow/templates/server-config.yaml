@@ -13,12 +13,12 @@ data:
     server:
       port: {{ .Values.server.port }}
       ssl:
-        enabled: {{ .Values.server.ssl.enabled }}
-        key-alias: {{ .Values.server.ssl.key-alias }}
-        key-store: "/data/secrets/keystore/"{{ .Values.server.ssl.key-store }}
-        key-store-type: {{ .Values.server.ssl.key-store-type }}
-        key-store-password: {{ .Values.server.ssl.key-store-password }}
-        key-password: {{ .Values.server.ssl.key-password }}
+        enabled: {{ .Values.server.ssl.enable }}
+        key-alias: {{ .Values.server.ssl.keyalias }}
+        key-store: "/data/secrets/keystore/"{{ .Values.server.ssl.keystore }}
+        key-store-type: {{ .Values.server.ssl.keystoretype }}
+        key-store-password: {{ .Values.server.ssl.keystorepassword }}
+        key-password: {{ .Values.server.ssl.keypassword }}
     spring:
       cloud:
         dataflow:
@@ -26,7 +26,7 @@ data:
             platform:
               kubernetes:
                 accounts:
-                  {{ .Values.server.platformName }}:
+                  {{ .Values.server.platformName }}
                     limits:
                       memory: {{ .Values.deployer.resourceLimits.memory }}
                       cpu: {{ .Values.deployer.resourceLimits.cpu }}

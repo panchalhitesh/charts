@@ -4,6 +4,7 @@ metadata:
   name: {{ template "scdf.fullname" . }}-server
   labels:
     app: {{ template "scdf.name" . }}
+    k8s-app: {{ template "scdf.name" . }}-server
     component: server
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: "{{ .Release.Name }}"
@@ -13,8 +14,8 @@ spec:
   type: {{ .Values.server.service.type }}
   ports:
     - port: {{ .Values.server.service.externalPort }}
-      targetPort: http
-      name: http
+      targetPort: https
+      name: web
   selector:
     app: {{ template "scdf.name" . }}
     component: server

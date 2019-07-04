@@ -31,21 +31,21 @@ spec:
             mountPath: /etc/secrets/mysql
             readOnly: true
         ports:
-        - containerPort: 8080
-          name: http
+        - containerPort: 443
+          name: https
         resources:
 {{ toYaml .Values.server.resources | indent 10 }}
         livenessProbe:
           httpGet:
             path: /management/health
-            port: http
+            port: https
           initialDelaySeconds: 120
           periodSeconds: 15
           timeoutSeconds: 5
         readinessProbe:
           httpGet:
             path: /management/health
-            port: http
+            port: https
           initialDelaySeconds: 60
           periodSeconds: 15
           timeoutSeconds: 5
@@ -55,11 +55,25 @@ spec:
             fieldRef:
               fieldPath: "metadata.namespace"
         - name: SERVER_PORT
-          value: '8080'
+          value: '443'
+        - name: SPRING_CLOUD_DEPLOYER_KUBERNETES_CREATE_DEPLOYMENT
+          value: 'true'
         - name: SPRING_CLOUD_CONFIG_ENABLED
           value: 'false'
+        - name: SPRING_CLOUD_DATAFLOW_FEATURES_ANALYTICS_ENABLED
+          value: 'true'
+        - name: spring.cloud.dataflow.applicationProperties.stream.management.metrics.export.prometheus.enabled
+          value: 'true'
+        - name: spring.management.metrics.export.prometheus.uri
+          value: 'http://prometheus-k8s.monitoring.svc.cluster.local:9090'
+        - name: spring.management.metrics.export.prometheus.enabled
+          value: 'true'
+        - name: spring.management.endpoint.prometheus.enabled
+          value: 'true'
         - name: SPRING_CLOUD_KUBERNETES_SECRETS_ENABLE_API
           value: 'true'
+        - name: SPRING_CLOUD_DATAFLOW_METRICS_COLLECTOR_URI
+          value: 'http://metrics:80'
         - name: SPRING_CLOUD_DATAFLOW_FEATURES_SCHEDULES_ENABLED
           value: 'true'
         - name: SPRING_CLOUD_KUBERNETES_SECRETS_PATHS
