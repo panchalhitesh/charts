@@ -10,6 +10,15 @@ metadata:
     heritage: "{{ .Release.Service }}"
 data:
   application.yaml: |-
+    server:
+      port: {{ .Values.server.port }}
+      ssl:
+        enabled: {{ .Values.server.ssl.enabled }}
+        key-alias: {{ .Values.server.ssl.key-alias }}
+        key-store: "/data/secrets/keystore/"{{ .Values.server.ssl.key-store }}
+        key-store-type: {{ .Values.server.ssl.key-store-type }}
+        key-store-password: {{ .Values.server.ssl.key-store-password }}
+        key-password: {{ .Values.server.ssl.key-password }}
     spring:
       cloud:
         dataflow:
@@ -22,9 +31,9 @@ data:
                       memory: {{ .Values.deployer.resourceLimits.memory }}
                       cpu: {{ .Values.deployer.resourceLimits.cpu }}
       datasource:
-        url: 'jdbc:mysql://${{ printf "{" }}{{ template "scdf.envrelease" . }}_MYSQL_SERVICE_HOST}:${{ printf "{" }}{{ template "scdf.envrelease" . }}_MYSQL_SERVICE_PORT}/{{ .Values.mysql.mysqlDatabase }}'
-        driverClassName: org.mariadb.jdbc.Driver
-        username: root
-        password: ${mysql-root-password}
+        url: 'jdbc:mysql://{{ template "scdf.database.host" . }}:{{ template "scdf.database.port" . }}/{{ template "scdf.database.dataflow" . }}'
+        driverClassName: {{ template "scdf.database.driver" . }}
+        username: {{ template "scdf.database.user" . }}
+        password: {{ template "scdf.database.password" . }}
         testOnBorrow: true
         validationQuery: "SELECT 1"
