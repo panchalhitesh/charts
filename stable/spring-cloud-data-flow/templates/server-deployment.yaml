@@ -27,6 +27,9 @@ spec:
         image: {{ .Values.server.image }}:{{ .Values.server.version }}
         imagePullPolicy: {{ .Values.server.imagePullPolicy }}
         volumeMounts:
+          - name: keystore
+            mountPath: /etc/secrets/keystore
+            readOnly: true
           - name: mysql
             mountPath: /etc/secrets/mysql
             readOnly: true
@@ -90,6 +93,11 @@ spec:
         - name: mysql
           secret:
             secretName: {{ printf "%s-%s" .Release.Name "mysql" | trunc 63 | trimSuffix "-" }}
+          {{- if .Values.server.ssl.enabled }}
+        - name: keystore
+          secret:
+            secretName: {{ .Values.server.ssl.secret }}
+          {{- end }}
       initContainers:
       - name: init-mysql-wait
         image: {{ .Values.mysql.busybox.image }}:{{ .Values.mysql.busybox.tag }}

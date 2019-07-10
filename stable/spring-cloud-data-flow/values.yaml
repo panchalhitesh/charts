@@ -23,8 +23,9 @@ server:
   platformName: default
   ssl:
     enable: true
+    secret: dataflow-ssl-jks
     keyalias: dataflow
-    keystore: dataflow.keystore.jks
+    keystore: dataflow.keystore
     keystoretype: JKS
     keystorepassword: dataflow
     keypassword: dataflow

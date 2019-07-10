@@ -15,7 +15,7 @@ data:
       ssl:
         enabled: {{ .Values.server.ssl.enable }}
         key-alias: {{ .Values.server.ssl.keyalias }}
-        key-store: "/data/secrets/keystore/"{{ .Values.server.ssl.keystore }}
+        key-store: "/etc/secrets/keystore/"{{ .Values.server.ssl.keystore }}
         key-store-type: {{ .Values.server.ssl.keystoretype }}
         key-store-password: {{ .Values.server.ssl.keystorepassword }}
         key-password: {{ .Values.server.ssl.keypassword }}
