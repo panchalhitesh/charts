@@ -24,8 +24,8 @@ server:
   ssl:
     enable: true
     keyalias: dataflow
-    keystore: "dataflow.keystore"
-    keystoretype: jks
+    keystore: dataflow.keystore.jks
+    keystoretype: JKS
     keystorepassword: dataflow
     keypassword: dataflow
   service:
