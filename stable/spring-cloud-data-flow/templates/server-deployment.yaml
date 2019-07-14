@@ -28,13 +28,13 @@ spec:
         imagePullPolicy: {{ .Values.server.imagePullPolicy }}
         volumeMounts:
           - name: keystore
-            mountPath: /etc/secrets/keystore
+            mountPath: {{.Values.server.ssl.mountPath}}
             readOnly: true
           - name: mysql
             mountPath: /etc/secrets/mysql
             readOnly: true
         ports:
-        - containerPort: 443
+        - containerPort: {{.Values.server.port}}
           name: https
         resources:
 {{ toYaml .Values.server.resources | indent 10 }}
@@ -58,7 +58,7 @@ spec:
             fieldRef:
               fieldPath: "metadata.namespace"
         - name: SERVER_PORT
-          value: '443'
+          value: {{.Values.server.port}}
         - name: SPRING_CLOUD_DEPLOYER_KUBERNETES_CREATE_DEPLOYMENT
           value: 'true'
         - name: SPRING_CLOUD_CONFIG_ENABLED
