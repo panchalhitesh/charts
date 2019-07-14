@@ -58,7 +58,7 @@ spec:
             fieldRef:
               fieldPath: "metadata.namespace"
         - name: SERVER_PORT
-          value: {{.Values.server.port}}
+          value: "8443"
         - name: SPRING_CLOUD_DEPLOYER_KUBERNETES_CREATE_DEPLOYMENT
           value: 'true'
         - name: SPRING_CLOUD_CONFIG_ENABLED
